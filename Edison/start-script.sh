@@ -4,17 +4,14 @@
 /home/root/SmartHelmet/Edison/run-python.sh &
 rfkill unblock bluetooth
 
-# Determine which commands need to be re-entered
-#bluetoothctl
-#scan on
-#pair 50:46:5D:77:25:1C
-#discoverable on
-#trust 50:46:5D:77:25:1C
-
-#echo -e 'scan on' | bluetoothctl
-echo -e 'pair 50:46:5D:77:25:1C' | bluetoothctl
+# Pair to Nexus 7 (ID 50:46:5D:77:25:1C)
+echo -e "power on\n" | bluetoothctl
+sleep 2
+echo -e "scan on\n" | bluetoothctl
+sleep 2
+echo -e "pair 50:46:5D:77:25:1C\n" | bluetoothctl
+sleep 2
+echo -e "discoverable on\n" | bluetoothctl
 sleep 1
-echo -e 'discoverable on' | bluetoothctl
-sleep 1
-echo -e 'trust 50:46:5D:77:25:1C' | bluetoothctl
-sleep 1
+echo -e "trust 50:46:5D:77:25:1C\n" | bluetoothctl
+sleep 2
