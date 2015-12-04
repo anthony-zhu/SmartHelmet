@@ -1,0 +1,5 @@
+power on
+scan on
+pair 50:46:5D:77:25:1C
+discoverable on
+trust 50:46:5D:77:25:1C
