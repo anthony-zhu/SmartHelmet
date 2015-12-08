@@ -1,6 +1,5 @@
 # Edison
 
-For the Edison
 To deploy (only need to do this once initially, once again if start-script.py
 or deploy.sh are updated):
 

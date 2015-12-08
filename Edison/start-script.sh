@@ -1,10 +1,8 @@
 #!/bin/bash
 
-# Change path to script if needed
-/home/root/SmartHelmet/Edison/run-python.sh &
 rfkill unblock bluetooth
 
-# This method is very touchy!
+# This method is very touchy! Use alternative pairing instead.
 # Pair to Nexus 7 (ID 50:46:5D:77:25:1C)
 #echo -e "power on\n" | bluetoothctl
 #sleep 2
@@ -19,3 +17,6 @@ rfkill unblock bluetooth
 
 # Alternative pairing
 bluetoothctl < /home/root/SmartHelmet/Edison/file.txt
+
+# Change path to script if needed
+/home/root/SmartHelmet/Edison/run-python.sh &
