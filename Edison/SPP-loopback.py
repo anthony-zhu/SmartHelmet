@@ -23,20 +23,20 @@ imu = IMU() # To select a specific I2C port, use IMU(n). Default is 1.
 # Initialize IMU
 imu.initialize()
 
+# Check if 9dof is connected
 if not imu.isWorking():
     print("9dof not enabled")
     sys.exit()
 
-# Enable accel, mag, gyro, and temperature
+# Enable accel, mag, gyro
 imu.enable_accel()
 imu.enable_mag()
 imu.enable_gyro()
 #imu.enable_temp()
 
 # Set range on accel, mag, and gyro
-
 # Specify Options: "2G", "4G", "6G", "8G", "16G"
-imu.accel_range("2G")       # leave blank for default of "2G" 
+imu.accel_range("8G")       # leave blank for default of "2G" 
 
 # Specify Options: "2GAUSS", "4GAUSS", "8GAUSS", "12GAUSS"
 imu.mag_range("2GAUSS")     # leave blank for default of "2GAUSS"
@@ -69,7 +69,7 @@ class Profile(dbus.service.Object):
 		#server_sock.send("This is Edison SPP loopback test\nAll data will be loopback\nPlease start:\n")
 
 		try:
-                    # Loop and read accel, mag, and gyro
+                    # Loop and send accel data
 		    while True:
                         # Uncomment if we want to receive data from mobile
 		        #data = server_sock.recv(1024)
@@ -77,19 +77,22 @@ class Profile(dbus.service.Object):
 		        #print("received: %s" % data)
 			#server_sock.send("looping back: %s\n" % data)
 
+                        # Read from sensors
                         imu.read_accel()
-                        imu.read_mag()
-                        imu.read_gyro()
+                        #imu.read_mag()
+                        #imu.read_gyro()
                         #imu.readTemp()
 
-                        # Print the results
+                        # Prints the results
                         #print("Accel: " + str(imu.ax) + ", " + str(imu.ay) + ", " + str(imu.az))
                         #print("Mag: " + str(imu.mx) + ", " + str(imu.my) + ", " + str(imu.mz))
                         #print("Gyro: " + str(imu.gx) + ", " + str(imu.gy) + ", " + str(imu.gz))
+                        #print("Temperature: " + str(imu.temp))
+
+                        # Send data over socket in JSON format
                         server_sock.send('{"accel":{"x":' + str(imu.ax) + ',"y":' + str(imu.ay) + ',"z":' + str(imu.az) + '}}' + '\n')
                         #server_sock.send("Gyro: " + str(imu.gx) + ", " + str(imu.gy) + ", " + str(imu.gz) + "\n")
                         #server_sock.send("Mag: " + str(imu.mx) + ", " + str(imu.my) + ", " + str(imu.mz) + "\n")
-                        #print("Temperature: " + str(imu.temp))
 			#server_sock.send("looping back: %s\n" % data)
                         time.sleep(0.1)
 		except IOError:
